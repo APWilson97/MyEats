@@ -1,15 +1,18 @@
 import React, { useEffect, useReducer } from 'react'
-import { getAll, search } from '../../services/foodService';
+import { getAll, getAllTags, search, getAllByTag } from '../../services/foodService';
 import Thumbnails from '../../components/Thumbnails/Thumbnails';
 import { useParams } from 'react-router-dom';
 import Search from '../../components/Search/Search';
+import Tags from '../../components/Tags/Tags';
 
-const initialState = { foods: [] };
+const initialState = { foods: [], tags: [] };
 
 const reducer = (state, action) => {
   switch(action.type) {
     case 'FOODS_LOADED':
       return { ...state, foods: action.payload };
+    case 'TAGS_LOADED':
+      return { ...state, tags: action.payload };
     default:
       return state;
   }
@@ -17,19 +20,27 @@ const reducer = (state, action) => {
 
 export default function HomePage() {
   const [state, dispatch] = useReducer(reducer, initialState)
-  const { foods } = state;
+  const { foods, tags } = state;
   // Returns object of key/value pairs of dynamic params from current URL matched by <Route path>, in this case it would be :searchTerm in /search/:searchTerm
-  const { searchTerm } = useParams();
+  const { searchTerm, tag } = useParams();
 
   useEffect( () => {
-    const loadFoods = searchTerm ? search(searchTerm) : getAll();
+    getAllTags().then(tags => dispatch({ type: 'TAGS_LOADED', payload: tags }))
+    
+    const loadFoods =
+    tag ?
+    getAllByTag(tag) : 
+    searchTerm ? 
+    search(searchTerm) : 
+    getAll();
 
     loadFoods.then(foods => dispatch({ type: "FOODS_LOADED", payload: foods }));
-  }, [searchTerm])
+  }, [searchTerm, tag])
 
   return (
     <>
       <Search />
+      <Tags tags={tags} />
       <Thumbnails foods={foods} />
     </>
   )

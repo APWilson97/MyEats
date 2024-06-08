@@ -22,3 +22,12 @@ export const sample_foods = [
         tags: ['FastFood', 'Noodles', 'Dinner'] 
     }
 ]
+
+export const sample_tags = [
+    { name: 'All', count: 2},
+    { name: 'FastFood', count: 2},
+    { name: 'Pizza', count: 1},
+    { name: 'Noodles', count: 1},
+    { name: 'Lunch', count: 1},
+    { name: 'Dinner', count: 1}
+]
