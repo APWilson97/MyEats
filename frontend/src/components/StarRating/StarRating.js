@@ -1,7 +1,7 @@
 import React from 'react'
 import classes from './starRating.module.css'
 
-export default function StarRating({ stars, size }) {
+export default function StarRating({ stars, size=18 }) {
     const styles = {
         width: size + 'px',
         height: size + 'px',
@@ -27,6 +27,6 @@ export default function StarRating({ stars, size }) {
     )
 }
 
-StarRating.defaultProps = {
-    size: 18,
-}
+// StarRating.defaultProps = {
+//     size: 18,
+// }
