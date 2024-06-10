@@ -1,20 +1,31 @@
-import { sample_foods, sample_tags } from "../data";
+export const getAll = async () => {
+    const data = await fetch('http://localhost:5000/api/foods')
+    .then((response) => response.json())
+    .then((data => data))
+    return data
+}
 
-export const getAll = async () => sample_foods
+export const search = async (searchTerm) => {
+    const data = await fetch('http://localhost:5000/api/foods/search/' + searchTerm).then((response) => response.json()).then((data) => data)
+    return data
+}
 
-export const search = async (searchTerm) => sample_foods.filter(item => 
-    item.name.toLowerCase().includes(searchTerm.toLowerCase())
-)
 
-export const getAllTags = async () => sample_tags
+export const getAllTags = async () => {
+    const data = await fetch('http://localhost:5000/api/foods/tags').then((response) => response.json()).then((data) => data)
+    return data
+}
 
 export const getAllByTag = async (tag) => {
     if(tag === 'All') {
         return getAll();
     } else {
-        return sample_foods.filter(item => item.tags?.includes(tag))
+        const data = await fetch('http://localhost:5000/api/foods/tag/' + tag).then((response) => response.json()).then((data) => data)
+        return data  
     }
 }
 
-export const getById = async (foodId) => 
-    sample_foods.find(item => item.id === foodId)
+export const getById = async (foodId) => {
+    const data = await fetch('http://localhost:5000/api/foods/' + foodId).then(response => response.json()).then(data => data)
+    return data
+}
