@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
             setUser(user)
             toast.success('Login successful')
         } catch (err) {
-            toast.error(err.response.data)
+            toast.error(err.message)
         }
     }
 
@@ -29,3 +29,5 @@ export const AuthProvider = ({ children }) => {
         </AuthContext.Provider>
     )
 }
+
+export const useAuth = () => useContext(AuthContext)

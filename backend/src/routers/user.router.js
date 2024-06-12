@@ -11,9 +11,9 @@ router.post('/login', (req, res) => {
     if (user) {
         res.send(generateTokenResponse(user))
         return
+    } else {
+        res.status(400).json({message: "Username or password is invalid"})
     }
-
-    res.status(400).send('Username or password is invalid')
 })
 
 const generateTokenResponse = (user) => {
