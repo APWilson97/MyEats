@@ -4,6 +4,7 @@ import { sample_foods, sample_tags } from "../data.js";
 const router = Router();
 
 router.get('/', (req, res) => {
+    console.log(req)
     res.send(sample_foods)
 })
 
