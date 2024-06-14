@@ -51,7 +51,7 @@ export default function LoginPage() {
 
                 <div className={classes.register}>
                     New user? &nbsp;
-                    <Link to={`/register?${returnUrl ? '?returnUrl=' + returnUrl : ''}`}>
+                    <Link to={`/register?${returnUrl ? 'returnUrl=' + returnUrl : ''}`}>
                         Sign up here
                     </Link>
                 </div>

@@ -5,8 +5,12 @@ import Input from '../../../components/Input/Input'
 import Title from '../../../components/Title/Title'
 import Button from '../../../components/Button/Button'
 import { Link } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 
 export default function RegisterPage() {
+  const [params] = useSearchParams()
+  const returnUrl = params.get('returnUrl')
+
   const {
     handleSubmit,
     register, 
@@ -54,6 +58,13 @@ export default function RegisterPage() {
           error={errors.address} />
 
           <Button type='submit' text='Sign up' />
+
+          <div className={classes.login}>
+            Already have an account? &nbsp;
+            <Link to={`/login?${returnUrl ? 'returnUrl=' + returnUrl : ''}`}>
+              Login here
+            </Link>
+          </div>
         </form>
       </div>
     </div>
