@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import handler from 'express-async-handler';
 import { User } from "../../models/user.model.js";
 import bcrypt from 'bcryptjs';
+const PASSWORD_HASH_SALT_ROUNDS = 10;
 
 const router = Router()
 
@@ -15,6 +16,29 @@ router.post('/login', handler(async (req, res) => {
     } else {
         res.status(400).json({message: "Username or password is invalid"})
     }
+}))
+
+router.post('/register', handler(async (req, res) => {
+    const { name, email, password, address } = req.body
+
+    const user = await User.findOne({ email })
+
+    if (user) {
+        res.status(400).json({message: "Email already registered with an account"})
+        return
+    }
+
+    const hashedPassword = await bcrypt.hash(password, PASSWORD_HASH_SALT_ROUNDS)
+
+    const newUser = {
+        name,
+        email: email.toLowerCase(),
+        password: hashedPassword,
+        address
+    }
+
+    const result = await User.create(newUser)
+    res.send(generateTokenResponse(result))
 }))
 
 const generateTokenResponse = (user) => {
