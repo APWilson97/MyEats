@@ -23,12 +23,12 @@ export const OrderItemSchema = new Schema(
     }
 )
 
-OrderItemSchema.pre('validate', (next) => {
-    this.price = this.food.price * this.quantity
-    next()
-})
+// OrderItemSchema.pre('validate', (next) => {
+//     this.price = this.food.price * this.quantity
+//     next()
+// })
 
-export const order = new Schema({
+export const OrderSchema = new Schema({
     name: { type: String, required: true },
     address: { type: String, required: true },
     addressLatLng: { type: LatLngSchema, required: true },
@@ -48,4 +48,4 @@ export const order = new Schema({
     }
 })
 
-export const Order = model('order', order)
+export const Order = model('order', OrderSchema)

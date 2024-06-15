@@ -1,8 +1,12 @@
+import { getUser } from "./userService.js"
+const user = getUser()
+
 export const createOrder = async (order) => {
     const response = await fetch('/api/orders/create', {
         method: 'POST',
         headers: {
-            'Content-type': 'application/json'
+            'Content-type': 'application/json',
+            'access_token': user.token
         },
         body: JSON.stringify(order)
     })
