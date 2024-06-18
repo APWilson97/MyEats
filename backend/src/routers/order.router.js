@@ -22,6 +22,24 @@ router.post('/create', handler(async (req, res) => {
     res.send(newOrder)
 }))
 
+router.put('/pay', handler(async (req, res) => {
+    const { paymentId } = req.body
+    console.log(paymentId)
+    console.log(req.body)
+    const order = await getNewOrder(req)
+
+    if (!order) {
+        res.status(400).send('Order not found!')
+    } 
+    
+    order.paymentId = paymentId
+    order.status = OrderStatus.PAID
+    await order.save()
+
+    res.send(order._id)
+}))
+
+
 router.get('/newOrderForCurrentUser', handler(async (req, res) => {
     const order = await getNewOrder(req)
     if (order) {

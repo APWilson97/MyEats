@@ -7,6 +7,7 @@ function App() {
 
   return (
     <>
+      <Loading />
       <Header/>
       <AppRoutes/>
     </>
