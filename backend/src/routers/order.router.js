@@ -22,4 +22,17 @@ router.post('/create', handler(async (req, res) => {
     res.send(newOrder)
 }))
 
+router.get('/newOrderForCurrentUser', handler(async (req, res) => {
+    const order = await getNewOrder(req)
+    if (order) {
+        res.send(order)
+    } else {
+        res.status(400).send()
+    }
+}))
+
+const getNewOrder = async (req) => {
+    return Order.findOne({ user: req.user.id, status: OrderStatus.NEW })
+}
+
 export default router

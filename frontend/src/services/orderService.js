@@ -19,3 +19,20 @@ export const createOrder = async (order) => {
     let data = await response.json()
     return data
 }
+
+export const getNewOrderForCurrentUser = async () => {
+    let data = await fetch('/api/orders/newOrderForCurrentUser', {
+        method: 'GET',
+        headers: {
+            'Content-type': 'application/json',
+            'access_token': user.token
+        }
+    })
+    .then(response => {
+        return response.json()
+    })
+    .then(data => {
+        return data
+    })
+    return data
+}
