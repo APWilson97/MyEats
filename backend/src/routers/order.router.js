@@ -24,8 +24,6 @@ router.post('/create', handler(async (req, res) => {
 
 router.put('/pay', handler(async (req, res) => {
     const { paymentId } = req.body
-    console.log(paymentId)
-    console.log(req.body)
     const order = await getNewOrder(req)
 
     if (!order) {
