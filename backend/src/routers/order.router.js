@@ -3,6 +3,7 @@ import handler from 'express-async-handler'
 import auth from '../middleware/auth.mid.js'
 import { Order } from "../models/order.model.js";
 import { OrderStatus } from "../constants/orderStatus.js";
+import { User } from "../models/user.model.js";
 
 const router = Router()
 router.use(auth)
@@ -37,6 +38,24 @@ router.put('/pay', handler(async (req, res) => {
     res.send(order._id)
 }))
 
+router.get('/track/:orderId', handler(async (req, res) => {
+    const { orderId } = req.params;
+    const user = await User.findById(req.user.id)
+
+    const filter = {
+        _id: orderId
+    }
+
+    if (!user.isAdmin) {
+        filter.user = user._id
+    }
+
+    const order = await Order.findOne(filter)
+
+    if (!order) return res.send(401)
+    
+    return res.send(order)
+}))
 
 router.get('/newOrderForCurrentUser', handler(async (req, res) => {
     const order = await getNewOrder(req)

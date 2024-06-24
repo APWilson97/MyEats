@@ -39,7 +39,7 @@ export const getNewOrderForCurrentUser = async () => {
 
 export const pay = async (paymentId) => {
     try {
-        const data = fetch('/api/orders/pay', {
+        const data = await fetch('/api/orders/pay', {
             method: 'PUT',
             headers: {
                 'Content-type': 'application/json',
@@ -53,4 +53,9 @@ export const pay = async (paymentId) => {
     } catch (error) {
         console.log(error)
     }
+}
+
+export const trackOrderById = async (orderId) => {
+    const data = await fetch('/api/orders/track/' + orderId).then(response => response.json()).then(data => data)
+    return data
 }
