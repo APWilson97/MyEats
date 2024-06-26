@@ -56,6 +56,14 @@ export const pay = async (paymentId) => {
 }
 
 export const trackOrderById = async (orderId) => {
-    const data = await fetch('/api/orders/track/' + orderId).then(response => response.json()).then(data => data)
+    const data = await fetch('/api/orders/track/' + orderId, {
+        method: 'GET',
+        headers: {
+            'Content-type': 'application/json',
+            'access_token': user.token
+        }
+    })
+    .then(response => response.json())
+    .then(data => data)
     return data
 }
